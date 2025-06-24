@@ -1,6 +1,7 @@
 import ProductoList from './components/Catalogo';
 import UsuarioList from './components/UsuarioList';
 import BarList from './components/BarList';
+import CrearCoctel from './components/CrearCoctel';
 
 interface AppProps {
   title: string;
@@ -13,6 +14,7 @@ function App({ title }: AppProps) {
       <ProductoList />
       <UsuarioList />
       <BarList/>
+      <CrearCoctel/>
     </div>
   );
 }

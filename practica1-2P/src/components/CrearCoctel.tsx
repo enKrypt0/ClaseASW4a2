@@ -1,28 +1,31 @@
-import { useState } from 'react';
+//Creado por Diego Velez, modulo para simular cocteles creados por usuarios
+
+import { useEffect, useState } from 'react';
 import type { ICoctelPersonalizado } from '../interfaces/CoctelPersonalizado';
 
-export default function ICoctelPersonalizado({ onAgregarCoctel }: { onAgregarCoctel: (nuevo: ICoctelPersonalizado) => void }) {
-    const [nombre, setNombre] = useState('');
-    const [precio, setPrecio] = useState(0);
-    const manejarEnvio = (e: React.FormEvent) => {
-        e.preventDefault();
-        const nuevoCoctel: ICoctelPersonalizado = {
-            id: Date.now(),
-            usuario: '',
-            TipoLicor: '',
-            Licor: '',
-            ingredientes: '',
-            precio: 0
-        };
-        onAgregarCoctel(nuevoCoctel);
-        setNombre('');
-        setPrecio(0);
-    };
-    return (
-        <form onSubmit={manejarEnvio}>
-            <input value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Nombre" />
-            <input type="number" value={precio} onChange={(e) => setPrecio(+e.target.value)} placeholder="Precio" />
-            <button type="submit">Agregar</button>
-        </form>
-    );
+export default function CoctelPersonalizadoList() {
+  const [cocteles, setCocteles] = useState<ICoctelPersonalizado[]>([]);
+
+  useEffect(() => {
+    const data: ICoctelPersonalizado[] = [
+      { id: 1, usuario: 'Juan', TipoLicor: 'Ron', Licor: 'Bacardi', ingredientes: 'Jugo de piña, hielo', precio: 8 },
+      { id: 2, usuario: 'Ana', TipoLicor: 'Vodka', Licor: 'Absolut', ingredientes: 'Jugo de naranja, hielo', precio: 10 },
+    ];
+    setTimeout(() => setCocteles(data), 1000); // Simula carga asincronica
+  }, []);
+
+  return (
+    <div>
+      <h2>Cocteles Personalizados</h2>
+      {cocteles.map((c) => (
+        <div key={c.id}>
+          <p>Usuario: {c.usuario}</p>
+          <p>Tipo de Licor: {c.TipoLicor}</p>
+          <p>Licor: {c.Licor}</p>
+          <p>Ingredientes: {c.ingredientes}</p>
+          <p>Precio: ${c.precio}</p>
+        </div>
+      ))}
+    </div>
+  );
 }
